@@ -44,9 +44,14 @@ public class View extends JFrame{
 		importBtn.setBounds(25, 140, 200, 30);
 		this.add(importBtn);
 		
-		LegendPanel resultPanel = new LegendPanel("Result");
-		resultPanel.setBounds(340, 20, 250, 300);
-		this.add(resultPanel);
+		LegendPanel ratioPanel = new LegendPanel("Ratio");
+		ratioPanel.setBounds(340, 20, 250, 300);
+		this.add(ratioPanel);
+		
+		LegendPanel colorPanel = new LegendPanel("Color");
+		colorPanel.setBounds(650, 20, 300, 200);
+		
+		this.add(colorPanel);
 		
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
