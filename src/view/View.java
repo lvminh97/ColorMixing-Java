@@ -4,6 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class View extends JFrame{
 
@@ -11,6 +13,7 @@ public class View extends JFrame{
 	
 	private JCheckBox color1ChkBox, color2ChkBox, color3ChkBox, color4ChkBox;
 	private JButton importBtn;
+	private JTable importData;
 
 	public View() {
 		this.initUI();
@@ -43,6 +46,20 @@ public class View extends JFrame{
 		importBtn = new JButton("Import color data");
 		importBtn.setBounds(25, 140, 200, 30);
 		this.add(importBtn);
+		
+		importData = new JTable(){
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		importData.setBounds(20, 200, 280, 450);
+		importData.setModel(new DefaultTableModel(new String[]{"Bước sóng", "Hệ số phản xạ"}, 0));
+		for(int i = 0; i < 31; i++){
+			((DefaultTableModel) importData.getModel()).addRow(new Object[] {(400 + 10 * i) + "", "0.0"});
+		}
+		this.add(importData);
 		
 		LegendPanel ratioPanel = new LegendPanel("Ratio");
 		ratioPanel.setBounds(340, 20, 250, 300);
