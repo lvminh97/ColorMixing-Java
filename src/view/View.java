@@ -8,6 +8,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 public class View extends JFrame{
 
 	private static final long serialVersionUID = 2118299654730994785L;
@@ -16,6 +25,9 @@ public class View extends JFrame{
 	private JButton importBtn, computeBtn;
 	private JScrollPane importDataScrl;
 	private JTable importDataTbl;
+	
+	private ChartPanel chartPanel;
+	private XYSeries chartData;
 
 	public View() {
 		this.initUI();
@@ -23,7 +35,7 @@ public class View extends JFrame{
 	
 	private void initUI() {
 		this.setTitle("Color Mixing Tool");
-		this.setBounds(100, 100, 1200, 700);
+		this.setBounds(100, 100, 1100, 700);
 		
 		JLabel label1 = new JLabel("Basic colors");
 		label1.setBounds(20, 20, 150, 20);
@@ -72,13 +84,28 @@ public class View extends JFrame{
 		importDataScrl.setViewportView(importDataTbl);
 		
 		LegendPanel ratioPanel = new LegendPanel("Ratio");
-		ratioPanel.setBounds(340, 20, 250, 200);
+		ratioPanel.setBounds(340, 20, 320, 200);
 		this.add(ratioPanel);
 		
 		LegendPanel colorPanel = new LegendPanel("Color");
-		colorPanel.setBounds(650, 20, 320, 200);
-		
+		colorPanel.setBounds(680, 20, 360, 200);
 		this.add(colorPanel);
+		
+		chartData = new XYSeries("color");
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		dataset.addSeries(chartData);
+		JFreeChart chart = ChartFactory.createXYLineChart("Color's reflection", "Wavelength(nm)", "Reflection", dataset);
+		XYPlot xyPlot = (XYPlot) chart.getXYPlot();
+		XYItemRenderer renderer = xyPlot.getRenderer();
+		xyPlot.setDomainCrosshairVisible(true);
+		xyPlot.setRangeCrosshairVisible(true);
+		ValueAxis domainAxis = xyPlot.getDomainAxis();
+		ValueAxis rangeAxis = xyPlot.getRangeAxis();
+		domainAxis.setRange(400, 760);
+		rangeAxis.setRange(0, 1.5);
+		chartPanel = new ChartPanel(chart);
+		chartPanel.setBounds(340, 250, 700, 400);
+		this.add(chartPanel);
 		
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,6 +113,22 @@ public class View extends JFrame{
 		this.setResizable(false);
 	}
 
+	public JCheckBox getColor1ChkBox(){
+		return color1ChkBox;
+	}
+	
+	public JCheckBox getColor2ChkBox(){
+		return color2ChkBox;
+	}
+	
+	public JCheckBox getColor3ChkBox(){
+		return color3ChkBox;
+	}
+	
+	public JCheckBox getColor4ChkBox(){
+		return color4ChkBox;
+	}
+	
 	public JButton getImportBtn() {
 		return importBtn;
 	}	

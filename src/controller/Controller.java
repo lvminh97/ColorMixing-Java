@@ -24,34 +24,40 @@ public class Controller implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == this.view.getImportBtn()){
-			JFileChooser importFile = new JFileChooser(new File(System.getProperty("user.home")));
-			importFile.setCurrentDirectory(null);
-			int result = importFile.showOpenDialog(this.view);
-			if(result == JFileChooser.APPROVE_OPTION){
-				File file = importFile.getSelectedFile();
-				try {
-					Scanner reader = new Scanner(file);
-					int rowId = 0;
-					while(reader.hasNext()) {
-						if(rowId == 31) break;
-						float refl = reader.nextFloat();
-						this.view.getImportDataTbl().getModel().setValueAt("" + refl, rowId, 1);
-						rowId++;
-					}
-					reader.close();
-					if(rowId < 31) {
-						System.out.println("The imported file is wrong format!");
-					}
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-				
-			}
+			this.importFile();
 		}
 		else if(e.getSource() == this.view.getComputeBtn()) {
 			// start computing
 		}
 	}
 	
+	public void importFile(){
+		JFileChooser importFile = new JFileChooser();
+		importFile.setCurrentDirectory(new File(System.getProperty("user.dir")));
+		int result = importFile.showOpenDialog(this.view);
+		if(result == JFileChooser.APPROVE_OPTION){
+			File file = importFile.getSelectedFile();
+			try {
+				Scanner reader = new Scanner(file);
+				int rowId = 0;
+				while(reader.hasNext()) {
+					if(rowId == 31) break;
+					float refl = reader.nextFloat();
+					this.view.getImportDataTbl().getModel().setValueAt("" + refl, rowId, 1);
+					rowId++;
+				}
+				reader.close();
+				if(rowId < 31) {
+					System.out.println("The imported file is wrong format!");
+				}
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	public void compute(){
+		
+	}
 	
 }
