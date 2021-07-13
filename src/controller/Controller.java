@@ -30,6 +30,17 @@ public class Controller implements ActionListener{
 				File file = importFile.getSelectedFile();
 				try {
 					Scanner reader = new Scanner(file);
+					int rowId = 0;
+					while(reader.hasNext()) {
+						if(rowId == 31) break;
+						float refl = reader.nextFloat();
+						this.view.getImportDataTbl().getModel().setValueAt("" + refl, rowId, 1);
+						rowId++;
+					}
+					reader.close();
+					if(rowId < 31) {
+						System.out.println("The imported file is wrong format!");
+					}
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}

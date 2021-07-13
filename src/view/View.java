@@ -61,7 +61,7 @@ public class View extends JFrame{
 			}
 		};
 		importDataTbl.setBounds(20, 200, 280, 450);
-		importDataTbl.setModel(new DefaultTableModel(new String[]{"Bước sóng", "Hệ số phản xạ"}, 0));
+		importDataTbl.setModel(new DefaultTableModel(new String[]{"Wavelength (nm)", "Reflection"}, 0));
 		for(int i = 0; i < 31; i++){
 			((DefaultTableModel) importDataTbl.getModel()).addRow(new Object[] {(400 + 10 * i) + "", "0.0"});
 		}
@@ -85,4 +85,8 @@ public class View extends JFrame{
 	public JButton getImportBtn() {
 		return importBtn;
 	}	
+	
+	public JTable getImportDataTbl() {
+		return importDataTbl;
+	}
 }
