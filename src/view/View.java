@@ -13,7 +13,7 @@ public class View extends JFrame{
 	private static final long serialVersionUID = 2118299654730994785L;
 	
 	private JCheckBox color1ChkBox, color2ChkBox, color3ChkBox, color4ChkBox;
-	private JButton importBtn;
+	private JButton importBtn, computeBtn;
 	private JScrollPane importDataScrl;
 	private JTable importDataTbl;
 
@@ -46,8 +46,12 @@ public class View extends JFrame{
 		this.add(color4ChkBox);
 		
 		importBtn = new JButton("Import color data");
-		importBtn.setBounds(25, 140, 200, 30);
+		importBtn.setBounds(25, 140, 150, 30);
 		this.add(importBtn);
+		
+		computeBtn = new JButton("Compute");
+		computeBtn.setBounds(185, 140, 110, 30);
+		this.add(computeBtn);
 		
 		importDataScrl = new JScrollPane();
 		importDataScrl.setBounds(20, 200, 280, 450);
@@ -88,5 +92,9 @@ public class View extends JFrame{
 	
 	public JTable getImportDataTbl() {
 		return importDataTbl;
+	}
+	
+	public JButton getComputeBtn() {
+		return computeBtn;
 	}
 }

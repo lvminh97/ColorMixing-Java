@@ -18,6 +18,7 @@ public class Controller implements ActionListener{
 	public Controller() {
 		this.view = new View();
 		this.view.getImportBtn().addActionListener(this);
+		this.view.getComputeBtn().addActionListener(this);
 	}
 
 	@Override
@@ -46,6 +47,9 @@ public class Controller implements ActionListener{
 				}
 				
 			}
+		}
+		else if(e.getSource() == this.view.getComputeBtn()) {
+			// start computing
 		}
 	}
 	
