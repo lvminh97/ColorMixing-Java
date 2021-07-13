@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,7 +14,8 @@ public class View extends JFrame{
 	
 	private JCheckBox color1ChkBox, color2ChkBox, color3ChkBox, color4ChkBox;
 	private JButton importBtn;
-	private JTable importData;
+	private JScrollPane importDataScrl;
+	private JTable importDataTbl;
 
 	public View() {
 		this.initUI();
@@ -47,26 +49,30 @@ public class View extends JFrame{
 		importBtn.setBounds(25, 140, 200, 30);
 		this.add(importBtn);
 		
-		importData = new JTable(){
+		importDataScrl = new JScrollPane();
+		importDataScrl.setBounds(20, 200, 280, 450);
+		this.add(importDataScrl);
+		
+		importDataTbl = new JTable(){
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
-		importData.setBounds(20, 200, 280, 450);
-		importData.setModel(new DefaultTableModel(new String[]{"Bước sóng", "Hệ số phản xạ"}, 0));
+		importDataTbl.setBounds(20, 200, 280, 450);
+		importDataTbl.setModel(new DefaultTableModel(new String[]{"Bước sóng", "Hệ số phản xạ"}, 0));
 		for(int i = 0; i < 31; i++){
-			((DefaultTableModel) importData.getModel()).addRow(new Object[] {(400 + 10 * i) + "", "0.0"});
+			((DefaultTableModel) importDataTbl.getModel()).addRow(new Object[] {(400 + 10 * i) + "", "0.0"});
 		}
-		this.add(importData);
+		importDataScrl.setViewportView(importDataTbl);
 		
 		LegendPanel ratioPanel = new LegendPanel("Ratio");
-		ratioPanel.setBounds(340, 20, 250, 300);
+		ratioPanel.setBounds(340, 20, 250, 200);
 		this.add(ratioPanel);
 		
 		LegendPanel colorPanel = new LegendPanel("Color");
-		colorPanel.setBounds(650, 20, 300, 200);
+		colorPanel.setBounds(650, 20, 320, 200);
 		
 		this.add(colorPanel);
 		
@@ -75,5 +81,8 @@ public class View extends JFrame{
 		this.setVisible(true);
 		this.setResizable(false);
 	}
-	
+
+	public JButton getImportBtn() {
+		return importBtn;
+	}	
 }
