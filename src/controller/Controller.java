@@ -1,13 +1,63 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import javax.swing.JFileChooser;
+
+import java.util.Scanner;
+
 import view.View;
 
-public class Controller {
+public class Controller implements ActionListener{
 	
 	private View view;
 	
 	public Controller() {
 		this.view = new View();
+		this.view.getImportBtn().addActionListener(this);
+		this.view.getComputeBtn().addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == this.view.getImportBtn()){
+			this.importFile();
+		}
+		else if(e.getSource() == this.view.getComputeBtn()) {
+			// start computing
+		}
+	}
+	
+	public void importFile(){
+		JFileChooser importFile = new JFileChooser();
+		importFile.setCurrentDirectory(new File(System.getProperty("user.dir")));
+		int result = importFile.showOpenDialog(this.view);
+		if(result == JFileChooser.APPROVE_OPTION){
+			File file = importFile.getSelectedFile();
+			try {
+				Scanner reader = new Scanner(file);
+				int rowId = 0;
+				while(reader.hasNext()) {
+					if(rowId == 31) break;
+					float refl = reader.nextFloat();
+					this.view.getImportDataTbl().getModel().setValueAt("" + refl, rowId, 1);
+					rowId++;
+				}
+				reader.close();
+				if(rowId < 31) {
+					System.out.println("The imported file is wrong format!");
+				}
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	public void compute(){
+		
 	}
 	
 }
