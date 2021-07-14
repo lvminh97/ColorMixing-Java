@@ -13,7 +13,6 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -25,9 +24,10 @@ public class View extends JFrame{
 	private JButton importBtn, computeBtn;
 	private JScrollPane importDataScrl;
 	private JTable importDataTbl;
+	private JLabel ratioLbl;
 	
 	private ChartPanel chartPanel;
-	private XYSeries chartData;
+	private XYSeries importSeries, computeSeries;
 
 	public View() {
 		this.initUI();
@@ -86,17 +86,22 @@ public class View extends JFrame{
 		LegendPanel ratioPanel = new LegendPanel("Ratio");
 		ratioPanel.setBounds(340, 20, 320, 200);
 		this.add(ratioPanel);
+		ratioLbl = new JLabel();
+		ratioLbl.setText("<html>Color1: 0%<br/><br/>Color2: 0%<br/><br/>Color3: 0%<br/><br/>Color4: 0%</html>");
+		ratioLbl.setBounds(60, 20, 280, 160);
+		ratioPanel.add(ratioLbl);
 		
 		LegendPanel colorPanel = new LegendPanel("Color");
 		colorPanel.setBounds(680, 20, 360, 200);
 		this.add(colorPanel);
 		
-		chartData = new XYSeries("color");
 		XYSeriesCollection dataset = new XYSeriesCollection();
-		dataset.addSeries(chartData);
+		importSeries = new XYSeries("sample data");
+		computeSeries = new XYSeries("computed data");
+		dataset.addSeries(importSeries);
+		dataset.addSeries(computeSeries);
 		JFreeChart chart = ChartFactory.createXYLineChart("Color's reflection", "Wavelength(nm)", "Reflection", dataset);
 		XYPlot xyPlot = (XYPlot) chart.getXYPlot();
-		XYItemRenderer renderer = xyPlot.getRenderer();
 		xyPlot.setDomainCrosshairVisible(true);
 		xyPlot.setRangeCrosshairVisible(true);
 		ValueAxis domainAxis = xyPlot.getDomainAxis();
