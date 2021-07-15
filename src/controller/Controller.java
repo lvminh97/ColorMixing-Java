@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
 
+import model.Color;
+
 import java.util.Scanner;
 
 import view.View;
@@ -17,6 +19,11 @@ public class Controller implements ActionListener{
 	
 	public Controller() {
 		this.view = new View();
+		this.loadBasicColor();
+		this.view.getColor1ChkBox().setText(Color.NAME[0]);
+		this.view.getColor2ChkBox().setText(Color.NAME[1]);
+		this.view.getColor3ChkBox().setText(Color.NAME[2]);
+		this.view.getColor4ChkBox().setText(Color.NAME[3]);
 		this.view.getImportBtn().addActionListener(this);
 		this.view.getComputeBtn().addActionListener(this);
 	}
@@ -31,7 +38,30 @@ public class Controller implements ActionListener{
 		}
 	}
 	
-	public void importFile(){
+	private void loadBasicColor() {
+		File nameCfg = new File("data/name.conf");
+		File colorCfg = new File("data/color.conf");
+		try {
+			Scanner reader = new Scanner(nameCfg);
+			int num = reader.nextInt();
+			reader.nextLine(); // clear '\n' in buffer
+			int id = 0;
+			Color.NAME = new String[num];
+			while(reader.hasNext()){
+				Color.NAME[id] = reader.nextLine();
+				id++;
+				if(id == num) break;
+			}
+			
+			reader.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error read config file");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void importFile(){
 		JFileChooser importFile = new JFileChooser();
 		importFile.setCurrentDirectory(new File(System.getProperty("user.dir")));
 		int result = importFile.showOpenDialog(this.view);
@@ -56,7 +86,7 @@ public class Controller implements ActionListener{
 		}
 	}
 	
-	public void compute(){
+	private void compute(){
 		
 	}
 	
