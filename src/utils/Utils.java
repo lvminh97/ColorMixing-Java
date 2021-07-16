@@ -2,16 +2,18 @@ package utils;
 
 import java.lang.Math;
 
+import model.Matrix;
+
 public class Utils {
 	
-	private double rgbFx(double x){
+	private static double rgbFx(double x){
 		if(x > 0.008856)
 			return Math.pow(x, 0.3333);
 		else
 			return (903.3 * x + 16) / 116;
 	}
 	
-	private double rgbAdjust(double x){
+	private static double rgbAdjust(double x){
 		double res = 0;
 		if(x <= -0.0031308)
 			res = 0;
@@ -26,5 +28,10 @@ public class Utils {
 			return 0;
 		else
 			return 1;
+	}
+	
+	public static float[] getXYZ(Matrix r){
+		
+		return null;
 	}
 }
