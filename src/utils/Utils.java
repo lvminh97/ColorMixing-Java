@@ -2,6 +2,7 @@ package utils;
 
 import java.lang.Math;
 
+import model.Color;
 import model.Matrix;
 
 public class Utils {
@@ -30,8 +31,27 @@ public class Utils {
 			return 1;
 	}
 	
-	public static float[] getXYZ(Matrix r){
-		
-		return null;
+	public static double[] getXYZ(double[] sample){
+		double[] resp = new double[] {0, 0, 0};
+		double K = 0;
+		for(int i = 0; i < sample.length; i++) {
+			K += Color.D65_ILL[i] * Color.OBSVR[1][i]; 
+			resp[0] += Color.D65_ILL[i] * Color.OBSVR[0][i] * sample[i];
+			resp[1] += Color.D65_ILL[i] * Color.OBSVR[1][i] * sample[i];
+			resp[2] += Color.D65_ILL[i] * Color.OBSVR[2][i] * sample[i];	
+		}
+		resp[0] /= K;
+		resp[1] /= K;
+		resp[2] /= K;
+		return resp;
+	}
+	
+	public static double[] getLAB(double[] sample) {
+		double[] resp = new double[] {0, 0, 0};
+		double[] XYZ = getXYZ(sample);
+		resp[0] = 116 * rgbFx(XYZ[1] / Color.D65_REF[1]) - 16;
+		resp[1] = 500 * (rgbFx(XYZ[0] / Color.D65_REF[0]) - rgbFx(XYZ[1] / Color.D65_REF[1]));
+		resp[2] = 200 * (rgbFx(XYZ[1] / Color.D65_REF[1]) - rgbFx(XYZ[2] / Color.D65_REF[2]));
+		return resp;
 	}
 }
