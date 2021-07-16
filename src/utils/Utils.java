@@ -3,6 +3,7 @@ package utils;
 import java.lang.Math;
 
 import model.Color;
+import model.Matrix;
 
 public class Utils {
 	
@@ -79,5 +80,9 @@ public class Utils {
 		resp[1] = (int) (g * 255);
 		resp[2] = (int) (b * 255);
 		return resp;
+	}
+	
+	public static Matrix compute() {
+		return null;
 	}
 }

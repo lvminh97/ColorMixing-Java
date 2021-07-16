@@ -13,11 +13,11 @@ import java.util.Scanner;
 
 import view.View;
 
-public class Controller implements ActionListener{
+public class ViewController implements ActionListener{
 	
 	private View view;
 	
-	public Controller() {
+	public ViewController() {
 		this.loadConf();
 		this.view = new View();
 		this.view.getColor1ChkBox().setText(Color.NAME[0]);
@@ -87,7 +87,15 @@ public class Controller implements ActionListener{
 	}
 	
 	private void compute(){
-		
+		int colorChooser = 0;
+		if(this.view.getColor1ChkBox().isSelected() == true)
+			colorChooser |= 1;
+		if(this.view.getColor2ChkBox().isSelected() == true)
+			colorChooser |= 2;
+		if(this.view.getColor3ChkBox().isSelected() == true)
+			colorChooser |= 4;
+		if(this.view.getColor4ChkBox().isSelected() == true)
+			colorChooser |= 8;
 	}
 	
 }

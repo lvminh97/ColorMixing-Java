@@ -1,11 +1,11 @@
 package main;
 
-import controller.Controller;
+import controller.ViewController;
 
 public class App {
 
 	public static void main(String[] args) {
-		new Controller();
+		new ViewController();
 	}	
 	
 }
