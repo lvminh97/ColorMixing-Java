@@ -18,8 +18,8 @@ public class Controller implements ActionListener{
 	private View view;
 	
 	public Controller() {
+		this.loadConf();
 		this.view = new View();
-		this.loadBasicColor();
 		this.view.getColor1ChkBox().setText(Color.NAME[0]);
 		this.view.getColor2ChkBox().setText(Color.NAME[1]);
 		this.view.getColor3ChkBox().setText(Color.NAME[2]);
@@ -38,7 +38,7 @@ public class Controller implements ActionListener{
 		}
 	}
 	
-	private void loadBasicColor() {
+	private void loadConf() {
 		File nameCfg = new File("data/name.conf");
 		File colorCfg = new File("data/color.conf");
 		try {

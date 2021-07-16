@@ -16,6 +16,8 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import model.Color;
+
 public class View extends JFrame{
 
 	private static final long serialVersionUID = 2118299654730994785L;
@@ -24,7 +26,7 @@ public class View extends JFrame{
 	private JButton importBtn, computeBtn;
 	private JScrollPane importDataScrl;
 	private JTable importDataTbl;
-	private JLabel ratioLbl;
+	private JLabel  color1RatioLbl, color2RatioLbl, color3RatioLbl, color4RatioLbl;
 	
 	private ChartPanel chartPanel;
 	private XYSeries importSeries, computeSeries;
@@ -86,10 +88,22 @@ public class View extends JFrame{
 		LegendPanel ratioPanel = new LegendPanel("Ratio");
 		ratioPanel.setBounds(340, 20, 320, 200);
 		this.add(ratioPanel);
-		ratioLbl = new JLabel();
-		ratioLbl.setText("<html>Color1: 0%<br/><br/>Color2: 0%<br/><br/>Color3: 0%<br/><br/>Color4: 0%</html>");
-		ratioLbl.setBounds(60, 20, 280, 160);
-		ratioPanel.add(ratioLbl);
+		color1RatioLbl = new JLabel();
+		color1RatioLbl.setText(Color.NAME[0] + ": 0%");
+		color1RatioLbl.setBounds(60, 30, 280, 20);
+		ratioPanel.add(color1RatioLbl);
+		color2RatioLbl = new JLabel();
+		color2RatioLbl.setText(Color.NAME[1] + ": 0%");
+		color2RatioLbl.setBounds(60, 60, 280, 20);
+		ratioPanel.add(color2RatioLbl);
+		color3RatioLbl = new JLabel();
+		color3RatioLbl.setText(Color.NAME[2] + ": 0%");
+		color3RatioLbl.setBounds(60, 90, 280, 20);
+		ratioPanel.add(color3RatioLbl);
+		color4RatioLbl = new JLabel();
+		color4RatioLbl.setText(Color.NAME[3] + ": 0%");
+		color4RatioLbl.setBounds(60, 120, 280, 20);
+		ratioPanel.add(color4RatioLbl);
 		
 		LegendPanel colorPanel = new LegendPanel("Color");
 		colorPanel.setBounds(680, 20, 360, 200);
