@@ -82,7 +82,26 @@ public class Utils {
 		return resp;
 	}
 	
-	public static Matrix compute() {
+	public static Matrix compute(int colorChooser) {
+		double[][]  basicColor = new double[4][31];
+		int pos = 0;
+		if((colorChooser & 1) != 0){
+			basicColor[pos] = Color.COLOR[0];
+			pos++;
+		}
+		if((colorChooser & 2) != 0){
+			basicColor[pos] = Color.COLOR[1];
+			pos++;
+		}
+		if((colorChooser & 4) != 0){
+			basicColor[pos] = Color.COLOR[2];
+			pos++;
+		}
+		if((colorChooser & 8) != 0){
+			basicColor[pos] = Color.COLOR[3];
+			pos++;
+		}
+		Matrix basicMat = new Matrix(basicColor, pos, 31).transpose();
 		return null;
 	}
 }

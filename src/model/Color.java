@@ -2,8 +2,10 @@ package model;
 
 public class Color {
 	
+	public static int MAX = 100;
+	
 	public static String[] NAME;
-	public static double[] COLOR;
+	public static double[][] COLOR;
 	
 	public static double[] D65_ILL = {
 		82.75, 91.49, 93.43, 86.68, 104.86, 117.01, 117.81, 

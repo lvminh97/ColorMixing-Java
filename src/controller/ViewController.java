@@ -16,6 +16,7 @@ import view.View;
 public class ViewController implements ActionListener{
 	
 	private View view;
+	private double[] sampleData;
 	
 	public ViewController() {
 		this.loadConf();
@@ -34,7 +35,7 @@ public class ViewController implements ActionListener{
 			this.importFile();
 		}
 		else if(e.getSource() == this.view.getComputeBtn()) {
-			// start computing
+			this.compute();
 		}
 	}
 	
@@ -52,7 +53,8 @@ public class ViewController implements ActionListener{
 				id++;
 				if(id == num) break;
 			}
-			
+			reader = new Scanner(colorCfg);
+			//
 			reader.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Error read config file");
@@ -69,15 +71,16 @@ public class ViewController implements ActionListener{
 			File file = importFile.getSelectedFile();
 			try {
 				Scanner reader = new Scanner(file);
-				int rowId = 0;
+				int id = 0;
+				this.sampleData = new double[31];
 				while(reader.hasNext()) {
-					if(rowId == 31) break;
-					float refl = reader.nextFloat();
-					this.view.getImportDataTbl().getModel().setValueAt("" + refl, rowId, 1);
-					rowId++;
+					if(id == 31) break;
+					this.sampleData[id] = reader.nextFloat();
+					this.view.getImportDataTbl().getModel().setValueAt("" + this.sampleData[id], id, 1);
+					id++;
 				}
 				reader.close();
-				if(rowId < 31) {
+				if(id < 31) {
 					System.out.println("The imported file is wrong format!");
 				}
 			} catch (FileNotFoundException e1) {
@@ -96,6 +99,15 @@ public class ViewController implements ActionListener{
 			colorChooser |= 4;
 		if(this.view.getColor4ChkBox().isSelected() == true)
 			colorChooser |= 8;
+//		double[] ratio = Utils.compute();
+	}
+	
+	private void showRatio(){
+		
+	}
+	
+	private void setColorBox(){
+		
 	}
 	
 }
