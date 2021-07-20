@@ -1,5 +1,8 @@
 package view;
 
+import java.awt.Color;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -16,7 +19,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import model.Color;
+import model.ColorParam;
 
 public class View extends JFrame{
 
@@ -26,7 +29,8 @@ public class View extends JFrame{
 	private JButton importBtn, computeBtn;
 	private JScrollPane importDataScrl;
 	private JTable importDataTbl;
-	private JLabel  color1RatioLbl, color2RatioLbl, color3RatioLbl, color4RatioLbl;
+	private JLabel color1RatioLbl, color2RatioLbl, color3RatioLbl, color4RatioLbl;
+	private JLabel sampleColorBox, computedColorBox;
 	
 	private ChartPanel chartPanel;
 	private XYSeries importSeries, computeSeries;
@@ -89,25 +93,39 @@ public class View extends JFrame{
 		ratioPanel.setBounds(340, 20, 320, 200);
 		this.add(ratioPanel);
 		color1RatioLbl = new JLabel();
-		color1RatioLbl.setText(Color.NAME[0] + ": 0%");
-		color1RatioLbl.setBounds(60, 30, 280, 20);
+		color1RatioLbl.setText(ColorParam.NAME[0] + ": 0%");
+		color1RatioLbl.setBounds(60, 40, 280, 20);
 		ratioPanel.add(color1RatioLbl);
 		color2RatioLbl = new JLabel();
-		color2RatioLbl.setText(Color.NAME[1] + ": 0%");
-		color2RatioLbl.setBounds(60, 60, 280, 20);
+		color2RatioLbl.setText(ColorParam.NAME[1] + ": 0%");
+		color2RatioLbl.setBounds(60, 70, 280, 20);
 		ratioPanel.add(color2RatioLbl);
 		color3RatioLbl = new JLabel();
-		color3RatioLbl.setText(Color.NAME[2] + ": 0%");
-		color3RatioLbl.setBounds(60, 90, 280, 20);
+		color3RatioLbl.setText(ColorParam.NAME[2] + ": 0%");
+		color3RatioLbl.setBounds(60, 100, 280, 20);
 		ratioPanel.add(color3RatioLbl);
 		color4RatioLbl = new JLabel();
-		color4RatioLbl.setText(Color.NAME[3] + ": 0%");
-		color4RatioLbl.setBounds(60, 120, 280, 20);
+		color4RatioLbl.setText(ColorParam.NAME[3] + ": 0%");
+		color4RatioLbl.setBounds(60, 130, 280, 20);
 		ratioPanel.add(color4RatioLbl);
 		
 		LegendPanel colorPanel = new LegendPanel("Color");
 		colorPanel.setBounds(680, 20, 360, 200);
 		this.add(colorPanel);
+		JLabel label2 = new JLabel("Sample color: ");
+		label2.setBounds(40, 50, 120, 30);
+		colorPanel.add(label2);
+		JLabel label3 = new JLabel("Computed color: ");
+		label3.setBounds(40, 110, 120, 30);
+		colorPanel.add(label3);
+		sampleColorBox = new JLabel();
+		sampleColorBox.setBounds(190, 55, 120, 20);
+		sampleColorBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		colorPanel.add(sampleColorBox);
+		computedColorBox = new JLabel();
+		computedColorBox.setBounds(190, 115, 120, 20);
+		computedColorBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		colorPanel.add(computedColorBox);
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		importSeries = new XYSeries("sample data");

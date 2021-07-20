@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 
-public class Color {
+public class ColorParam {
 	
 	public static int MAX = 100;
 	
@@ -45,9 +45,9 @@ public class Color {
 			int num = reader.nextInt();
 			reader.nextLine(); // clear '\n' in buffer
 			int id = 0;
-			Color.NAME = new String[num];
+			ColorParam.NAME = new String[num];
 			while(reader.hasNext()){
-				Color.NAME[id] = reader.nextLine();
+				ColorParam.NAME[id] = reader.nextLine();
 				id++;
 				if(id == num) break;
 			}
@@ -55,7 +55,7 @@ public class Color {
 			reader = new Scanner(colorCfg);
 			int id1 = 0, id2 = 0;
 			while(reader.hasNext()) {
-				Color.COLOR[id1][id2] = reader.nextDouble();
+				ColorParam.COLOR[id1][id2] = reader.nextDouble();
 				id2++;
 				if(id2 == 31) id1++;
 			}

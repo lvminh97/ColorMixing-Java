@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JFileChooser;
 
-import model.Color;
+import model.ColorParam;
 import utils.Utils;
 
 import java.util.Scanner;
@@ -22,10 +22,10 @@ public class ViewController implements ActionListener{
 	public ViewController() {
 		Utils.importBasicColor();
 		this.view = new View();
-		this.view.getColor1ChkBox().setText(Color.NAME[0]);
-		this.view.getColor2ChkBox().setText(Color.NAME[1]);
-		this.view.getColor3ChkBox().setText(Color.NAME[2]);
-		this.view.getColor4ChkBox().setText(Color.NAME[3]);
+		this.view.getColor1ChkBox().setText(ColorParam.NAME[0]);
+		this.view.getColor2ChkBox().setText(ColorParam.NAME[1]);
+		this.view.getColor3ChkBox().setText(ColorParam.NAME[2]);
+		this.view.getColor4ChkBox().setText(ColorParam.NAME[3]);
 		this.view.getImportBtn().addActionListener(this);
 		this.view.getComputeBtn().addActionListener(this);
 	}

@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.lang.Math;
 import java.util.Scanner;
 
-import model.Color;
+import model.ColorParam;
 import model.Matrix;
 
 public class Utils {
@@ -18,18 +18,18 @@ public class Utils {
 			int num = reader.nextInt();
 			reader.nextLine(); // clear '\n' in buffer
 			int id = 0;
-			Color.NAME = new String[num];
+			ColorParam.NAME = new String[num];
 			while(reader.hasNext()){
-				Color.NAME[id] = reader.nextLine();
+				ColorParam.NAME[id] = reader.nextLine();
 				id++;
 				if(id == num) break;
 			}
 			reader.close();
-			Color.COLOR = new double[num][31];
+			ColorParam.COLOR = new double[num][31];
 			reader = new Scanner(colorCfg);
 			int id1 = 0, id2 = 0;
 			while(reader.hasNext()) {
-				Color.COLOR[id1][id2] = reader.nextDouble();
+				ColorParam.COLOR[id1][id2] = reader.nextDouble();
 				id2++;
 				if(id2 == 31) {
 					id1++;
@@ -71,10 +71,10 @@ public class Utils {
 		double[] resp = new double[] {0, 0, 0};
 		double K = 0;
 		for(int i = 0; i < sample.length; i++) {
-			K += Color.D65_ILL[i] * Color.OBSVR[1][i]; 
-			resp[0] += Color.D65_ILL[i] * Color.OBSVR[0][i] * sample[i];
-			resp[1] += Color.D65_ILL[i] * Color.OBSVR[1][i] * sample[i];
-			resp[2] += Color.D65_ILL[i] * Color.OBSVR[2][i] * sample[i];	
+			K += ColorParam.D65_ILL[i] * ColorParam.OBSVR[1][i]; 
+			resp[0] += ColorParam.D65_ILL[i] * ColorParam.OBSVR[0][i] * sample[i];
+			resp[1] += ColorParam.D65_ILL[i] * ColorParam.OBSVR[1][i] * sample[i];
+			resp[2] += ColorParam.D65_ILL[i] * ColorParam.OBSVR[2][i] * sample[i];	
 		}
 		resp[0] /= K;
 		resp[1] /= K;
@@ -85,9 +85,9 @@ public class Utils {
 	public static double[] getLAB(double[] sample) {
 		double[] resp = new double[] {0, 0, 0};
 		double[] XYZ = getXYZ(sample);
-		resp[0] = 116 * rgbFx(XYZ[1] / Color.D65_REF[1]) - 16;
-		resp[1] = 500 * (rgbFx(XYZ[0] / Color.D65_REF[0]) - rgbFx(XYZ[1] / Color.D65_REF[1]));
-		resp[2] = 200 * (rgbFx(XYZ[1] / Color.D65_REF[1]) - rgbFx(XYZ[2] / Color.D65_REF[2]));
+		resp[0] = 116 * rgbFx(XYZ[1] / ColorParam.D65_REF[1]) - 16;
+		resp[1] = 500 * (rgbFx(XYZ[0] / ColorParam.D65_REF[0]) - rgbFx(XYZ[1] / ColorParam.D65_REF[1]));
+		resp[2] = 200 * (rgbFx(XYZ[1] / ColorParam.D65_REF[1]) - rgbFx(XYZ[2] / ColorParam.D65_REF[2]));
 		return resp;
 	}
 	
@@ -122,19 +122,19 @@ public class Utils {
 		double[][]  basicColor = new double[4][31];
 		int pos = 0;
 		if((colorChooser & 1) != 0){
-			basicColor[pos] = Color.COLOR[0];
+			basicColor[pos] = ColorParam.COLOR[0];
 			pos++;
 		}
 		if((colorChooser & 2) != 0){
-			basicColor[pos] = Color.COLOR[1];
+			basicColor[pos] = ColorParam.COLOR[1];
 			pos++;
 		}
 		if((colorChooser & 4) != 0){
-			basicColor[pos] = Color.COLOR[2];
+			basicColor[pos] = ColorParam.COLOR[2];
 			pos++;
 		}
 		if((colorChooser & 8) != 0){
-			basicColor[pos] = Color.COLOR[3];
+			basicColor[pos] = ColorParam.COLOR[3];
 			pos++;
 		}
 		Matrix basicMat = new Matrix(basicColor, pos, 31).transpose();
