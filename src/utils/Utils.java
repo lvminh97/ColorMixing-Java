@@ -1,11 +1,47 @@
 package utils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.Math;
+import java.util.Scanner;
 
 import model.Color;
 import model.Matrix;
 
 public class Utils {
+	
+	public static void importBasicColor() {
+		File nameCfg = new File("data/name.conf");
+		File colorCfg = new File("data/color.conf");
+		try {
+			Scanner reader = new Scanner(nameCfg);
+			int num = reader.nextInt();
+			reader.nextLine(); // clear '\n' in buffer
+			int id = 0;
+			Color.NAME = new String[num];
+			while(reader.hasNext()){
+				Color.NAME[id] = reader.nextLine();
+				id++;
+				if(id == num) break;
+			}
+			reader.close();
+			Color.COLOR = new double[num][31];
+			reader = new Scanner(colorCfg);
+			int id1 = 0, id2 = 0;
+			while(reader.hasNext()) {
+				Color.COLOR[id1][id2] = reader.nextDouble();
+				id2++;
+				if(id2 == 31) {
+					id1++;
+					id2 = 0;
+				}
+			}
+			reader.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error read config file");
+			e.printStackTrace();
+		}
+	}
 	
 	private static double rgbFx(double x){
 		if(x > 0.008856)

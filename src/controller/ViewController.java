@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import javax.swing.JFileChooser;
 
 import model.Color;
+import utils.Utils;
 
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ public class ViewController implements ActionListener{
 	private double[] sampleData;
 	
 	public ViewController() {
-		this.loadConf();
+		Utils.importBasicColor();
 		this.view = new View();
 		this.view.getColor1ChkBox().setText(Color.NAME[0]);
 		this.view.getColor2ChkBox().setText(Color.NAME[1]);
@@ -37,30 +38,6 @@ public class ViewController implements ActionListener{
 		else if(e.getSource() == this.view.getComputeBtn()) {
 			this.compute();
 		}
-	}
-	
-	private void loadConf() {
-		File nameCfg = new File("data/name.conf");
-		File colorCfg = new File("data/color.conf");
-		try {
-			Scanner reader = new Scanner(nameCfg);
-			int num = reader.nextInt();
-			reader.nextLine(); // clear '\n' in buffer
-			int id = 0;
-			Color.NAME = new String[num];
-			while(reader.hasNext()){
-				Color.NAME[id] = reader.nextLine();
-				id++;
-				if(id == num) break;
-			}
-			reader = new Scanner(colorCfg);
-			//
-			reader.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Error read config file");
-			e.printStackTrace();
-		}
-		
 	}
 	
 	private void importFile(){

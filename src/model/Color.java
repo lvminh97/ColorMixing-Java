@@ -1,5 +1,12 @@
 package model;
 
+import java.awt.Component;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import javax.swing.JFileChooser;
+
 public class Color {
 	
 	public static int MAX = 100;
@@ -29,5 +36,34 @@ public class Color {
 			0.0137, 0.004, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 		}
 	};
+	
+	public static void importBasicColor(){
+		File nameCfg = new File("data/name.conf");
+		File colorCfg = new File("data/color.conf");
+		try {
+			Scanner reader = new Scanner(nameCfg);
+			int num = reader.nextInt();
+			reader.nextLine(); // clear '\n' in buffer
+			int id = 0;
+			Color.NAME = new String[num];
+			while(reader.hasNext()){
+				Color.NAME[id] = reader.nextLine();
+				id++;
+				if(id == num) break;
+			}
+			reader.close();
+			reader = new Scanner(colorCfg);
+			int id1 = 0, id2 = 0;
+			while(reader.hasNext()) {
+				Color.COLOR[id1][id2] = reader.nextDouble();
+				id2++;
+				if(id2 == 31) id1++;
+			}
+			reader.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error read config file");
+			e.printStackTrace();
+		}
+	}
 	
 }
