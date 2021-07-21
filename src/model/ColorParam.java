@@ -1,15 +1,10 @@
 package model;
 
-import java.awt.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import javax.swing.JFileChooser;
-
 public class ColorParam {
-	
-	public static int MAX = 100;
 	
 	public static String[] NAME;
 	public static double[][] COLOR;
@@ -52,12 +47,16 @@ public class ColorParam {
 				if(id == num) break;
 			}
 			reader.close();
+			ColorParam.COLOR = new double[num][31];
 			reader = new Scanner(colorCfg);
 			int id1 = 0, id2 = 0;
 			while(reader.hasNext()) {
 				ColorParam.COLOR[id1][id2] = reader.nextDouble();
 				id2++;
-				if(id2 == 31) id1++;
+				if(id2 == 31) {
+					id1++;
+					id2 = 0;
+				}
 			}
 			reader.close();
 		} catch (FileNotFoundException e) {
