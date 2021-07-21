@@ -13,8 +13,26 @@ public class ProcessController {
 	private double minDiff, minDiff2;
 	private double[] LAB_ref;
 	
-	public ProcessController(Matrix mat, int resol) {
-		this.basicMat = mat;
+	public ProcessController(int choose, int resol) {
+		double[][]  basicColor = new double[4][31];
+		this.len = 0;
+		if((choose & 1) != 0){
+			basicColor[this.len] = ColorParam.COLOR[0];
+			this.len++;
+		}
+		if((choose & 2) != 0){
+			basicColor[this.len] = ColorParam.COLOR[1];
+			this.len++;
+		}
+		if((choose & 4) != 0){
+			basicColor[this.len] = ColorParam.COLOR[2];
+			this.len++;
+		}
+		if((choose & 8) != 0){
+			basicColor[this.len] = ColorParam.COLOR[3];
+			this.len++;
+		}
+		this.basicMat = new Matrix(basicColor, len, 31).transpose();
 		this.resolution = resol;
 	}
 	
@@ -76,25 +94,6 @@ public class ProcessController {
 	}
 	
 	public Matrix compute(int colorChooser) {
-//		double[][]  basicColor = new double[4][31];
-//		len = 0;
-//		if((colorChooser & 1) != 0){
-//			basicColor[len] = ColorParam.COLOR[0];
-//			len++;
-//		}
-//		if((colorChooser & 2) != 0){
-//			basicColor[len] = ColorParam.COLOR[1];
-//			len++;
-//		}
-//		if((colorChooser & 4) != 0){
-//			basicColor[len] = ColorParam.COLOR[2];
-//			len++;
-//		}
-//		if((colorChooser & 8) != 0){
-//			basicColor[len] = ColorParam.COLOR[3];
-//			len++;
-//		}
-//		basicMat = new Matrix(basicColor, len, 31).transpose();
 //			backtrack(basicMat, 0, bound, step, resolution);
 		return null;
 	}
