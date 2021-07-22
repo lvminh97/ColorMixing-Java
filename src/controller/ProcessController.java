@@ -11,6 +11,7 @@ public class ProcessController {
 	private int resolution;
 	
 	private double minDiff, minDiff2;
+	private double[] finalRatio;
 	private double[] LAB_ref;
 	
 	public ProcessController(int choose, int resol) {
@@ -81,10 +82,11 @@ public class ProcessController {
 					double[] LAB_computed = computedColor.getLAB();
 					if(deltaAB(LAB_ref, LAB_computed) < 5.0 && minDiff > Math.abs(LAB_ref[0] - LAB_computed[0])) {
 						minDiff = Math.abs(LAB_ref[0] - LAB_computed[0]);
-						
+						finalRatio = ratioMat.toArray1D();
 					}
 					else if(minDiff2 > deltaAB(LAB_ref, LAB_computed)) {
 						minDiff2 = deltaAB(LAB_ref, LAB_computed);
+						finalRatio = ratioMat.toArray1D();
 					}
 				}
 			}

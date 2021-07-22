@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import javax.swing.JFileChooser;
 
@@ -52,7 +54,7 @@ public class ViewController implements ActionListener{
 				while(reader.hasNext()) {
 					if(id == 31) break;
 					this.sampleData[id] = reader.nextFloat();
-					this.view.getImportDataTbl().getModel().setValueAt("" + this.sampleData[id], id, 1);
+					this.view.getImportDataTbl().getModel().setValueAt("" + new DecimalFormat("#0.0000").format(sampleData[id]), id, 1);
 					id++;
 				}
 				reader.close();
