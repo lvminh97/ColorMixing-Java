@@ -4,11 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import javax.swing.JFileChooser;
 
 import model.ColorParam;
-import utils.Utils;
 
 import java.util.Scanner;
 
@@ -20,7 +21,7 @@ public class ViewController implements ActionListener{
 	private double[] sampleData;
 	
 	public ViewController() {
-		Utils.importBasicColor();
+		ColorParam.importBasicColor();
 		this.view = new View();
 		this.view.getColor1ChkBox().setText(ColorParam.NAME[0]);
 		this.view.getColor2ChkBox().setText(ColorParam.NAME[1]);
@@ -53,7 +54,7 @@ public class ViewController implements ActionListener{
 				while(reader.hasNext()) {
 					if(id == 31) break;
 					this.sampleData[id] = reader.nextFloat();
-					this.view.getImportDataTbl().getModel().setValueAt("" + this.sampleData[id], id, 1);
+					this.view.getImportDataTbl().getModel().setValueAt("" + new DecimalFormat("#0.0000").format(sampleData[id]), id, 1);
 					id++;
 				}
 				reader.close();
@@ -76,7 +77,8 @@ public class ViewController implements ActionListener{
 			colorChooser |= 4;
 		if(this.view.getColor4ChkBox().isSelected() == true)
 			colorChooser |= 8;
-//		double[] ratio = Utils.compute();
+		ProcessController process = new ProcessController(colorChooser, 1000);
+		double[] ratio = process.compute(new int[][] {{0, 1000}, {0, 1000}, {0, 1000}, {0, 1000}}, 10);
 	}
 	
 	private void showRatio(){

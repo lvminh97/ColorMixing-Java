@@ -36,6 +36,20 @@ public class Matrix {
 		}
 	}
 	
+	public Matrix(double[] m, int r, int c) {
+		this.row = r;
+		this.col = c;
+		this.data = new double[r][c];
+		for(int i = 0; i < this.row; i++){
+			for(int j = 0; j < this.col; j++){
+				if(r * i + j < m.length)
+					this.data[i][j] = m[r * i + j];
+				else 
+					this.data[i][j] = 0;
+			}
+		}
+	}
+	
 	public Matrix(Matrix m){
 		this.row = m.row;
 		this.col = m.col;
@@ -60,6 +74,16 @@ public class Matrix {
 	
 	public double get(int i, int j){
 		return this.data[i][j];
+	}
+	
+	public double[] toArray1D() {
+		double[] res = new double[this.row * this.col];
+		for(int i = 0; i < this.row; i++) {
+			for(int j = 0; j < this.col; j++) {
+				res[this.row * i + j] = this.data[i][j];
+			}
+		}
+		return res;
 	}
 	
 	public Matrix mul(Matrix b){
