@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 import javax.swing.JFileChooser;
 
@@ -18,7 +17,7 @@ import view.View;
 public class ViewController implements ActionListener{
 	
 	private View view;
-	private double[] sampleData;
+	private double[] sampleData = null;
 	
 	public ViewController() {
 		ColorParam.importBasicColor();
@@ -54,7 +53,7 @@ public class ViewController implements ActionListener{
 				while(reader.hasNext()) {
 					if(id == 31) break;
 					this.sampleData[id] = reader.nextFloat();
-					this.view.getImportDataTbl().getModel().setValueAt("" + new DecimalFormat("#0.0000").format(sampleData[id]), id, 1);
+					this.view.getImportDataTbl().getModel().setValueAt("" + new DecimalFormat("#0.0000").format(this.sampleData[id]), id, 1);
 					id++;
 				}
 				reader.close();
@@ -68,16 +67,16 @@ public class ViewController implements ActionListener{
 	}
 	
 	private void compute(){
-		int colorChooser = 0;
-		if(this.view.getColor1ChkBox().isSelected() == true)
-			colorChooser |= 1;
-		if(this.view.getColor2ChkBox().isSelected() == true)
-			colorChooser |= 2;
-		if(this.view.getColor3ChkBox().isSelected() == true)
-			colorChooser |= 4;
-		if(this.view.getColor4ChkBox().isSelected() == true)
-			colorChooser |= 8;
-		ProcessController process = new ProcessController(colorChooser, 1000);
+		if(this.sampleData == null){
+			System.out.println("Please import the sample data file first");
+			return;
+		}
+		int colorChooser = (this.view.getColor1ChkBox().isSelected() ? 1 : 0)
+						| (this.view.getColor2ChkBox().isSelected() ? 2 : 0)
+						| (this.view.getColor3ChkBox().isSelected() ? 4 : 0)
+						| (this.view.getColor4ChkBox().isSelected() ? 8 : 0);
+		
+		ProcessController process = new ProcessController(colorChooser, this.sampleData, 1000);
 		double[] ratio = process.compute(new int[][] {{0, 1000}, {0, 1000}, {0, 1000}, {0, 1000}}, 10);
 	}
 	
