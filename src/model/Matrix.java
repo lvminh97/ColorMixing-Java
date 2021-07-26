@@ -80,7 +80,7 @@ public class Matrix {
 		double[] res = new double[this.row * this.col];
 		for(int i = 0; i < this.row; i++) {
 			for(int j = 0; j < this.col; j++) {
-				res[this.row * i + j] = this.data[i][j];
+				res[i * this.col + j] = this.data[i][j];
 			}
 		}
 		return res;

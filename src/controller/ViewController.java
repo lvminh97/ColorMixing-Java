@@ -1,15 +1,16 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 import javax.swing.JFileChooser;
 
 import model.ColorParam;
+import model.Colors;
 
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ import view.View;
 public class ViewController implements ActionListener{
 	
 	private View view;
-	private double[] sampleData;
+	private double[] sampleData = null;
 	
 	public ViewController() {
 		ColorParam.importBasicColor();
@@ -54,7 +55,7 @@ public class ViewController implements ActionListener{
 				while(reader.hasNext()) {
 					if(id == 31) break;
 					this.sampleData[id] = reader.nextFloat();
-					this.view.getImportDataTbl().getModel().setValueAt("" + new DecimalFormat("#0.0000").format(sampleData[id]), id, 1);
+					this.view.getImportDataTbl().getModel().setValueAt("" + new DecimalFormat("#0.0000").format(this.sampleData[id]), id, 1);
 					id++;
 				}
 				reader.close();
@@ -68,25 +69,74 @@ public class ViewController implements ActionListener{
 	}
 	
 	private void compute(){
-		int colorChooser = 0;
-		if(this.view.getColor1ChkBox().isSelected() == true)
-			colorChooser |= 1;
-		if(this.view.getColor2ChkBox().isSelected() == true)
-			colorChooser |= 2;
-		if(this.view.getColor3ChkBox().isSelected() == true)
-			colorChooser |= 4;
-		if(this.view.getColor4ChkBox().isSelected() == true)
-			colorChooser |= 8;
-		ProcessController process = new ProcessController(colorChooser, 1000);
-		double[] ratio = process.compute(new int[][] {{0, 1000}, {0, 1000}, {0, 1000}, {0, 1000}}, 10);
-	}
-	
-	private void showRatio(){
+		if(this.sampleData == null){
+			System.out.println("Please import the sample data file first");
+			return;
+		}
+		int colorChooser = (this.view.getColor1ChkBox().isSelected() ? 1 : 0)
+						| (this.view.getColor2ChkBox().isSelected() ? 2 : 0)
+						| (this.view.getColor3ChkBox().isSelected() ? 4 : 0)
+						| (this.view.getColor4ChkBox().isSelected() ? 8 : 0);
 		
+		ProcessController process = new ProcessController(colorChooser, this.sampleData, 5000);
+		// Reset chart
+		this.view.getSampleSeries().clear();
+		this.view.getComputedSeries().clear();
+		// Compute
+		double[] ratio = process.compute();
+		// Show the result
+		this.showRatio(colorChooser, ratio);
+		this.setColorBox(process.getSampleColor(), process.getComputedColor());
+		this.drawChart(process.getSampleColor(), process.getComputedColor());
 	}
 	
-	private void setColorBox(){
-		
+	private void showRatio(int chooser, double[] ratio){
+		String[] ratioTexts = new String[4];
+		int id = 0;
+		int bit = 1;
+		for(int i = 0; i < 4; i++) {
+			if((chooser & bit) != 0)
+				ratioTexts[i] = new DecimalFormat("#0.00").format(ratio[id++] * 100) + "%";
+			else 
+				ratioTexts[i] = "0.00%";
+			
+			bit <<= 1;
+		}
+		this.view.getColor1RatioLbl().setText(ratioTexts[0]);
+		this.view.getColor2RatioLbl().setText(ratioTexts[1]);
+		this.view.getColor3RatioLbl().setText(ratioTexts[2]);
+		this.view.getColor4RatioLbl().setText(ratioTexts[3]);
 	}
 	
+	private void setColorBox(Colors sample, Colors computed){
+		int[] sampleRGB = sample.getRGB();
+		double[] sampleLAB = sample.getLAB();
+		int[] computedRGB = computed.getRGB();
+		double[] computedLAB = computed.getLAB();
+		this.view.getSampleColorBox().setBackground(new Color(sampleRGB[0], sampleRGB[1], sampleRGB[2]));
+		this.view.getComputedColorBox().setBackground(new Color(computedRGB[0], computedRGB[1], computedRGB[2]));
+		this.view.getSampleCIELABLbl().setText("LAB = (" 
+				+ new DecimalFormat("#0.00").format(sampleLAB[0])
+				+ ", " 
+				+ new DecimalFormat("#0.00").format(sampleLAB[1])
+				+ ", "
+				+ new DecimalFormat("#0.00").format(sampleLAB[2])
+				+ ")");
+		this.view.getComputedCIELABLbl().setText("LAB = (" 
+				+ new DecimalFormat("#0.00").format(computedLAB[0])
+				+ ", " 
+				+ new DecimalFormat("#0.00").format(computedLAB[1])
+				+ ", "
+				+ new DecimalFormat("#0.00").format(computedLAB[2])
+				+ ")");
+	}
+	
+	private void drawChart(Colors sample, Colors computed) {
+		double[] sampleData = sample.getData();
+		double[] computedData = computed.getData();
+		for(int i = 0; i < 31; i++) {
+			this.view.getSampleSeries().add((double) (400 + 10 * i), sampleData[i]);
+			this.view.getComputedSeries().add((double) (400 + 10 * i), computedData[i]);
+		}
+	}
 }
