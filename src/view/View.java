@@ -31,9 +31,10 @@ public class View extends JFrame{
 	private JTable importDataTbl;
 	private JLabel color1RatioLbl, color2RatioLbl, color3RatioLbl, color4RatioLbl;
 	private JLabel sampleColorBox, computedColorBox;
+	private JLabel sampleCIELABLbl, computedCIELABLbl;
 	
 	private ChartPanel chartPanel;
-	private XYSeries importSeries, computeSeries;
+	private XYSeries sampleSeries, computedSeries;
 
 	public View() {
 		this.initUI();
@@ -92,56 +93,80 @@ public class View extends JFrame{
 		LegendPanel ratioPanel = new LegendPanel("Ratio");
 		ratioPanel.setBounds(340, 20, 320, 200);
 		this.add(ratioPanel);
+		JLabel label3 = new JLabel(ColorParam.NAME[0] + ":");
+		label3.setBounds(60, 40, 80, 20);
+		ratioPanel.add(label3);
 		color1RatioLbl = new JLabel();
-		color1RatioLbl.setText(ColorParam.NAME[0] + ": 0%");
-		color1RatioLbl.setBounds(60, 40, 280, 20);
+		color1RatioLbl.setText("0.00%");
+		color1RatioLbl.setBounds(150, 40, 60, 20);
 		ratioPanel.add(color1RatioLbl);
+		JLabel label4 = new JLabel(ColorParam.NAME[1] + ":");
+		label4.setBounds(60, 70, 80, 20);
+		ratioPanel.add(label4);
 		color2RatioLbl = new JLabel();
-		color2RatioLbl.setText(ColorParam.NAME[1] + ": 0%");
-		color2RatioLbl.setBounds(60, 70, 280, 20);
+		color2RatioLbl.setText("0.00%");
+		color2RatioLbl.setBounds(150, 70, 60, 20);
 		ratioPanel.add(color2RatioLbl);
+		JLabel label5 = new JLabel(ColorParam.NAME[2] + ":");
+		label5.setBounds(60, 100, 80, 20);
+		ratioPanel.add(label5);
 		color3RatioLbl = new JLabel();
-		color3RatioLbl.setText(ColorParam.NAME[2] + ": 0%");
-		color3RatioLbl.setBounds(60, 100, 280, 20);
+		color3RatioLbl.setText("0.00%");
+		color3RatioLbl.setBounds(150, 100, 60, 20);
 		ratioPanel.add(color3RatioLbl);
+		JLabel label6 = new JLabel(ColorParam.NAME[3] + ":");
+		label6.setBounds(60, 130, 80, 20);
+		ratioPanel.add(label6);
 		color4RatioLbl = new JLabel();
-		color4RatioLbl.setText(ColorParam.NAME[3] + ": 0%");
-		color4RatioLbl.setBounds(60, 130, 280, 20);
+		color4RatioLbl.setText("0.00%");
+		color4RatioLbl.setBounds(150, 130, 60, 20);
 		ratioPanel.add(color4RatioLbl);
 		
 		LegendPanel colorPanel = new LegendPanel("Color");
 		colorPanel.setBounds(680, 20, 360, 200);
 		this.add(colorPanel);
-		JLabel label2 = new JLabel("Sample color: ");
-		label2.setBounds(40, 50, 120, 30);
-		colorPanel.add(label2);
-		JLabel label3 = new JLabel("Computed color: ");
-		label3.setBounds(40, 110, 120, 30);
-		colorPanel.add(label3);
+		JLabel label7 = new JLabel("Sample color: ");
+		label7.setBounds(30, 50, 100, 30);
+		colorPanel.add(label7);
+		JLabel label8 = new JLabel("Computed color: ");
+		label8.setBounds(30, 110, 100, 30);
+		colorPanel.add(label8);
 		sampleColorBox = new JLabel();
-		sampleColorBox.setBounds(190, 55, 120, 20);
+		sampleColorBox.setBounds(140, 55, 180, 20);
 		sampleColorBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		sampleColorBox.setOpaque(true);
 		colorPanel.add(sampleColorBox);
+		sampleCIELABLbl = new JLabel();
+		sampleCIELABLbl.setBounds(140, 85, 180, 20);
+		sampleCIELABLbl.setText("LAB = (0, 0, 0)");
+		colorPanel.add(sampleCIELABLbl);
 		computedColorBox = new JLabel();
-		computedColorBox.setBounds(190, 115, 120, 20);
+		computedColorBox.setBounds(140, 115, 180, 20);
 		computedColorBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		computedColorBox.setOpaque(true);
 		colorPanel.add(computedColorBox);
+		computedCIELABLbl = new JLabel();
+		computedCIELABLbl.setBounds(140, 145, 180, 20);
+		computedCIELABLbl.setText("LAB = (0, 0, 0)");
+		colorPanel.add(computedCIELABLbl);
 		
 		XYSeriesCollection dataset = new XYSeriesCollection();
-		importSeries = new XYSeries("sample data");
-		computeSeries = new XYSeries("computed data");
-		dataset.addSeries(importSeries);
-		dataset.addSeries(computeSeries);
+		sampleSeries = new XYSeries("sample data");
+		computedSeries = new XYSeries("computed data");
+		dataset.addSeries(sampleSeries);
+		dataset.addSeries(computedSeries);
 		JFreeChart chart = ChartFactory.createXYLineChart("Color's reflection", "Wavelength(nm)", "Reflection", dataset);
 		XYPlot xyPlot = (XYPlot) chart.getXYPlot();
 		xyPlot.setDomainCrosshairVisible(true);
 		xyPlot.setRangeCrosshairVisible(true);
 		ValueAxis domainAxis = xyPlot.getDomainAxis();
 		ValueAxis rangeAxis = xyPlot.getRangeAxis();
-		domainAxis.setRange(400, 760);
+		domainAxis.setRange(400, 720);
 		rangeAxis.setRange(0, 1.5);
 		chartPanel = new ChartPanel(chart);
 		chartPanel.setBounds(340, 250, 700, 400);
+		chartPanel.setDomainZoomable(false);
+		chartPanel.setRangeZoomable(false);
 		this.add(chartPanel);
 		
 		this.setLayout(null);
@@ -176,5 +201,45 @@ public class View extends JFrame{
 	
 	public JButton getComputeBtn() {
 		return computeBtn;
+	}
+
+	public JLabel getColor1RatioLbl() {
+		return color1RatioLbl;
+	}
+
+	public JLabel getColor2RatioLbl() {
+		return color2RatioLbl;
+	}
+
+	public JLabel getColor3RatioLbl() {
+		return color3RatioLbl;
+	}
+
+	public JLabel getColor4RatioLbl() {
+		return color4RatioLbl;
+	}	
+	
+	public JLabel getSampleColorBox() {
+		return sampleColorBox;
+	}
+	
+	public JLabel getComputedColorBox() {
+		return computedColorBox;
+	}
+	
+	public JLabel getSampleCIELABLbl() {
+		return sampleCIELABLbl;
+	}
+	
+	public JLabel getComputedCIELABLbl() {
+		return computedCIELABLbl;
+	}
+	
+	public XYSeries getSampleSeries() {
+		return sampleSeries;
+	}
+	
+	public XYSeries getComputedSeries() {
+		return computedSeries;
 	}
 }
