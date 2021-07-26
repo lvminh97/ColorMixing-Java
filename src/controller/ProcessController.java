@@ -65,7 +65,7 @@ public class ProcessController {
 				curSum += a;
 				if(pos < this.len - 2)
 					this.backtrack(pos + 1, curSum, bound, step, LAB_ref);
-				else if(curSum <= this.resolution) {
+				else if(curSum < this.resolution) {
 					this.ratio[this.len - 1] = this.resolution - curSum;
 					Matrix ratioMat = new Matrix(len, 1);
 					for(int i = 0; i < len; i++) 
@@ -79,8 +79,8 @@ public class ProcessController {
 						this.computedColor = new Colors(computedData);
 						finalRatio = ratioMat.toArray1D();
 					}
-					else if(minDiff2 > deltaAB(LAB_ref, LAB_computed)) {
-						minDiff2 = deltaAB(LAB_ref, LAB_computed);
+					else if(minDiff2 > deltaE(LAB_ref, LAB_computed)) {
+						minDiff2 = deltaE(LAB_ref, LAB_computed);
 						this.computedColor = new Colors(computedData);
 						finalRatio = ratioMat.toArray1D();
 					}
@@ -92,7 +92,7 @@ public class ProcessController {
 		}
 	}
 	
-	public double[] compute(int[][] bound, int step) {
+	public double[] compute() {
 		this.minDiff = 9999999;
 		this.minDiff2 = 9999999;
 		this.ratio = new int[this.len];
@@ -100,9 +100,18 @@ public class ProcessController {
 			this.ratio[i] = 0;
 		this.finalRatio = new double[this.len];
 		double[] LAB_ref = this.sampleColor.getLAB();
-		
-		this.backtrack(0, 0, bound, step, LAB_ref);
-		
+		int[][] bound = new int[this.len][2];
+		//
+		for(int i = 0; i < this.len; i++) {
+			bound[i][0] = 0;
+			bound[i][1] = this.resolution;
+		}
+		this.backtrack(0, 0, bound, 1, LAB_ref);
+		//
+//		for(int i = 0; i < this.len; i++) {
+//			bound[i][0] = this.finalRatio[i] * this.resolution - ;
+//			bound[i][1] = this.resolution;
+//		}
 		return this.finalRatio;
 	}
 	

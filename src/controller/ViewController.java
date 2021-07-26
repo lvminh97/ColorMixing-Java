@@ -78,12 +78,12 @@ public class ViewController implements ActionListener{
 						| (this.view.getColor3ChkBox().isSelected() ? 4 : 0)
 						| (this.view.getColor4ChkBox().isSelected() ? 8 : 0);
 		
-		ProcessController process = new ProcessController(colorChooser, this.sampleData, 500);
+		ProcessController process = new ProcessController(colorChooser, this.sampleData, 5000);
 		// Reset chart
 		this.view.getSampleSeries().clear();
 		this.view.getComputedSeries().clear();
 		// Compute
-		double[] ratio = process.compute(new int[][] {{0, 1000}, {0, 1000}, {0, 1000}, {0, 1000}}, 10);
+		double[] ratio = process.compute();
 		// Show the result
 		this.showRatio(colorChooser, ratio);
 		this.setColorBox(process.getSampleColor(), process.getComputedColor());
