@@ -78,7 +78,7 @@ public class ViewController implements ActionListener{
 						| (this.view.getColor3ChkBox().isSelected() ? 4 : 0)
 						| (this.view.getColor4ChkBox().isSelected() ? 8 : 0);
 		
-		ProcessController process = new ProcessController(colorChooser, this.sampleData, 5000);
+		ProcessController process = new ProcessController(colorChooser, this.sampleData, 10000);
 		// Reset chart
 		this.view.getSampleSeries().clear();
 		this.view.getComputedSeries().clear();

@@ -106,6 +106,12 @@ public class ProcessController {
 			bound[i][0] = 0;
 			bound[i][1] = this.resolution;
 		}
+		this.backtrack(0, 0, bound, 200, LAB_ref);
+		//
+		for(int i = 0; i < this.len; i++) {
+			bound[i][0] = (int) (this.finalRatio[i] * this.resolution) - 400;
+			bound[i][1] = (int) (this.finalRatio[i] * this.resolution) + 400;
+		}
 		this.backtrack(0, 0, bound, 100, LAB_ref);
 		//
 		for(int i = 0; i < this.len; i++) {
