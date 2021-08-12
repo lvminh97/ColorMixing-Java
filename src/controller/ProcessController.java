@@ -57,7 +57,7 @@ public class ProcessController {
 	}
 	
 	private void backtrack(int pos, int curSum, int[][] bound, int step, double[] LAB_ref) {
-		for(int a = bound[pos][0]; a <= bound[pos][1]; a++) {
+		for(int a = bound[pos][0]; a <= bound[pos][1]; a += step) {
 			if(a < 0) 
 				continue;
 			else if(curSum + a <= this.resolution) {
@@ -106,12 +106,31 @@ public class ProcessController {
 			bound[i][0] = 0;
 			bound[i][1] = this.resolution;
 		}
-		this.backtrack(0, 0, bound, 1, LAB_ref);
+		this.backtrack(0, 0, bound, 100, LAB_ref);
 		//
-//		for(int i = 0; i < this.len; i++) {
-//			bound[i][0] = this.finalRatio[i] * this.resolution - ;
-//			bound[i][1] = this.resolution;
-//		}
+		for(int i = 0; i < this.len; i++) {
+			bound[i][0] = (int) (this.finalRatio[i] * this.resolution) - 200;
+			bound[i][1] = (int) (this.finalRatio[i] * this.resolution) + 200;
+		}
+		this.backtrack(0, 0, bound, 50, LAB_ref);
+		//
+		for(int i = 0; i < this.len; i++) {
+			bound[i][0] = (int) (this.finalRatio[i] * this.resolution) - 100;
+			bound[i][1] = (int) (this.finalRatio[i] * this.resolution) + 100;
+		}
+		this.backtrack(0, 0, bound, 25, LAB_ref);
+		//
+		for(int i = 0; i < this.len; i++) {
+			bound[i][0] = (int) (this.finalRatio[i] * this.resolution) - 50;
+			bound[i][1] = (int) (this.finalRatio[i] * this.resolution) + 50;
+		}
+		this.backtrack(0, 0, bound, 10, LAB_ref);
+		//
+		for(int i = 0; i < this.len; i++) {
+			bound[i][0] = (int) (this.finalRatio[i] * this.resolution) - 20;
+			bound[i][1] = (int) (this.finalRatio[i] * this.resolution) + 20;
+		}
+		this.backtrack(0, 0, bound, 1, LAB_ref);
 		return this.finalRatio;
 	}
 	
