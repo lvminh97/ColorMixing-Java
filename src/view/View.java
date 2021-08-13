@@ -28,6 +28,7 @@ public class View extends JFrame{
 	private JCheckBox color1ChkBox, color2ChkBox, color3ChkBox, color4ChkBox;
 	private JButton importBtn, computeBtn;
 	private JScrollPane importDataScrl;
+	private JLabel fileNameLbl;
 	private JTable importDataTbl;
 	private JLabel color1RatioLbl, color2RatioLbl, color3RatioLbl, color4RatioLbl;
 	private JLabel sampleColorBox, computedColorBox;
@@ -72,8 +73,12 @@ public class View extends JFrame{
 		computeBtn.setBounds(185, 140, 110, 30);
 		this.add(computeBtn);
 		
+		fileNameLbl = new JLabel();
+		fileNameLbl.setBounds(20, 180, 100, 20);
+		this.add(fileNameLbl);
+		
 		importDataScrl = new JScrollPane();
-		importDataScrl.setBounds(20, 200, 280, 450);
+		importDataScrl.setBounds(20, 210, 280, 440);
 		this.add(importDataScrl);
 		
 		importDataTbl = new JTable(){
@@ -193,7 +198,11 @@ public class View extends JFrame{
 	
 	public JButton getImportBtn() {
 		return importBtn;
-	}	
+	}
+	
+	public JLabel getFileNameLbl() {
+		return fileNameLbl;
+	}
 	
 	public JTable getImportDataTbl() {
 		return importDataTbl;

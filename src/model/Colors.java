@@ -69,12 +69,13 @@ public class Colors {
 		double[] resp = new double[] {LAB[0], 0, 0};
 		resp[1] = Math.pow(LAB[1] * LAB[1] + LAB[2] * LAB[2], 0.5);
 		if(LAB[1] != 0)
-			resp[2] = Math.atan(LAB[2] / LAB[1]) / Math.PI * 180;
+			resp[2] = Math.atan(LAB[2] / LAB[1]);
 		else if(LAB[2] >= 0)
-			resp[2] = 90;
-		else			resp[2] = 270;
+			resp[2] = Math.PI / 2;
+		else			
+			resp[2] = 3 * Math.PI / 2;
 		if(LAB[1] < 0)
-			resp[2] += 180;
+			resp[2] += Math.PI;
 		return resp;
 	}
 	

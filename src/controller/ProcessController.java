@@ -56,6 +56,11 @@ public class ProcessController {
 		return Math.sqrt(s);
 	}
 	
+	private double deltaCH(double[] lch1, double[] lch2) {
+		double s = Math.pow(lch1[1] - lch2[1], 2) + Math.pow(lch1[2] - lch2[2], 2);
+		return Math.sqrt(s);
+	}
+	
 	private void backtrack(int pos, int curSum, int[][] bound, int step, double[] LAB_ref) {
 		for(int a = bound[pos][0]; a <= bound[pos][1]; a += step) {
 			if(a < 0) 

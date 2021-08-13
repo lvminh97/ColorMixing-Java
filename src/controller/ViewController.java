@@ -62,6 +62,7 @@ public class ViewController implements ActionListener{
 				if(id < 31) {
 					System.out.println("The imported file is wrong format!");
 				}
+				this.view.getFileNameLbl().setText(file.getName());
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			}
