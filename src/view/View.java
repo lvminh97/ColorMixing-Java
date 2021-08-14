@@ -74,7 +74,7 @@ public class View extends JFrame{
 		this.add(computeBtn);
 		
 		fileNameLbl = new JLabel();
-		fileNameLbl.setBounds(20, 180, 100, 20);
+		fileNameLbl.setBounds(20, 180, 280, 20);
 		this.add(fileNameLbl);
 		
 		importDataScrl = new JScrollPane();
