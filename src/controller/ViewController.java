@@ -147,11 +147,11 @@ public class ViewController implements ActionListener{
 		double[] computedData = computed.getData();
 		double[] res = new double[31];
 		for(int i = 0; i < 31; i++) {
-			if(Math.abs(sampleData[i] - computedData[i]) <= 0.05) {
+			if(Math.abs(sampleData[i] - computedData[i]) <= 0.02) {
 				res[i] = computedData[i];
 			}
 			else {
-				double diff = Math.abs(sampleData[i] - computedData[i]) / 6;
+				double diff = Math.abs(sampleData[i] - computedData[i]) / 10;
 				if(computedData[i] > sampleData[i])
 					res[i] = sampleData[i] + diff;
 				else
