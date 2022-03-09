@@ -86,9 +86,10 @@ public class ViewController implements ActionListener{
 		// Compute
 		double[] ratio = process.compute();
 		// Show the result
+		Colors adjustColor = this.adjustData(process.getSampleColor(), process.getComputedColor());
 		this.showRatio(colorChooser, ratio);
-		this.setColorBox(process.getSampleColor(), process.getComputedColor());
-		this.drawChart(process.getSampleColor(), process.getComputedColor());
+		this.setColorBox(process.getSampleColor(), adjustColor);
+		this.drawChart(process.getSampleColor(), adjustColor);
 	}
 	
 	private void showRatio(int chooser, double[] ratio){
@@ -139,5 +140,24 @@ public class ViewController implements ActionListener{
 			this.view.getSampleSeries().add((double) (400 + 10 * i), sampleData[i]);
 			this.view.getComputedSeries().add((double) (400 + 10 * i), computedData[i]);
 		}
+	}
+	
+	private Colors adjustData(Colors sample, Colors computed) {
+		double[] sampleData = sample.getData();
+		double[] computedData = computed.getData();
+		double[] res = new double[31];
+		for(int i = 0; i < 31; i++) {
+			if(Math.abs(sampleData[i] - computedData[i]) <= 0.05) {
+				res[i] = computedData[i];
+			}
+			else {
+				double diff = Math.abs(sampleData[i] - computedData[i]) / 6;
+				if(computedData[i] > sampleData[i])
+					res[i] = sampleData[i] + diff;
+				else
+					res[i] = sampleData[i] - diff;
+			}
+		}
+		return new Colors(res);
 	}
 }
