@@ -33,8 +33,8 @@ public class ColorParam {
 	};
 	
 	public static void importBasicColor(){
-		File nameCfg = new File("data/name.conf");
-		File colorCfg = new File("data/color.conf");
+		File nameCfg = new File("config/name.conf");
+		File colorCfg = new File("config/color.conf");
 		try {
 			Scanner reader = new Scanner(nameCfg);
 			int num = reader.nextInt();
